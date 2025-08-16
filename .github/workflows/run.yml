@@ -9,14 +9,18 @@ on:
 jobs:
   run-model:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Download emotions.csv from Google Drive
+      - name: Download emotions.csv from Google Drive (using gdown)
         run: |
-          curl -L "https://drive.google.com/uc?export=download&id=1ZRPZvHH-JrwWC9xgavF9EK17-ikm5FFo" -o emotions.csv
+          pip install gdown
+          gdown --id 1ZRPZvHH-JrwWC9xgavF9EK17-ikm5FFo -O emotions.csv
+          echo "First 5 lines of downloaded file:"
+          head -n 5 emotions.csv
+          echo "File size:"
+          ls -lh emotions.csv
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -41,4 +45,4 @@ jobs:
             classification_report.txt
             feature_importance_top50.csv
             group_importance.csv
-            family_importance.csv         
+            family_importance.csv
