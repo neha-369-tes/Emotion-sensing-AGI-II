@@ -32,7 +32,7 @@ jobs:
         run: python ver-9.py
 
       - name: Upload artifacts (model + logs + explainability)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: eeg-emotion-artifacts
           path: |
