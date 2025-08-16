@@ -13,19 +13,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Download emotions.csv from Google Drive (using gdown)
-        run: |
-          pip install gdown
-          gdown --id 1ZRPZvHH-JrwWC9xgavF9EK17-ikm5FFo -O emotions.csv
-          echo "First 5 lines of downloaded file:"
-          head -n 5 emotions.csv
-          echo "File size:"
-          ls -lh emotions.csv
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+
+      - name: Download emotions.csv from GitHub Releases
+        run: |
+          wget -O emotions.csv https://github.com/neha-369-tes/Emotion-sensing-AGI-II/releases/download/V1/emotions.csv
+          echo "First 5 lines of downloaded file:"
+          head -n 5 emotions.csv
+          echo "File size:"
+          ls -lh emotions.csv
 
       - name: Install dependencies
         run: |
@@ -34,6 +33,18 @@ jobs:
 
       - name: Train model
         run: python ver-9.py
+
+      - name: Upload artifacts (model + logs + explainability)
+        uses: actions/upload-artifact@v4
+        with:
+          name: eeg-emotion-artifacts
+          path: |
+            emotion_model.h5
+            model_summary.json
+            classification_report.txt
+            feature_importance_top50.csv
+            group_importance.csv
+            family_importance.csv
 
       - name: Upload artifacts (model + logs + explainability)
         uses: actions/upload-artifact@v4
