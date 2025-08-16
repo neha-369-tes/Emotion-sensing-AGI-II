@@ -1,13 +1,12 @@
-name: Run EEG Emotion Model
-
-on:
-  workflow_dispatch:  # run manually
-
 jobs:
   run-model:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Download emotions.csv from Google Drive
+        run: |
+          curl -L "https://drive.google.com/uc?export=download&id=1ZRPZvHH-JrwWC9xgavF9EK17-ikm5FFo" -o emotions.csv
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -28,8 +27,6 @@ jobs:
             emotion_model.h5
             model_summary.json
             classification_report.txt
-            label_encoder.pkl
-            scaler.pkl
             feature_importance_top50.csv
             group_importance.csv
             family_importance.csv
