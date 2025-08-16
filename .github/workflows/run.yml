@@ -41,11 +41,4 @@ jobs:
             classification_report.txt
             feature_importance_top50.csv
             group_importance.csv
-            family_importance.csv          name: eeg-emotion-artifacts
-          path: |
-            emotion_model.h5
-            model_summary.json
-            classification_report.txt
-            feature_importance_top50.csv
-            group_importance.csv
-            family_importance.csv
+            family_importance.csv         
